@@ -1,0 +1,6 @@
+framework module Pods_iOSAssignmentSwiftUI {
+  umbrella header "Pods-iOSAssignmentSwiftUI-umbrella.h"
+
+  export *
+  module * { export * }
+}
