@@ -12,10 +12,10 @@ struct LessonsListView: View {
     
     @ObservedObject var viewModel = LessonsListViewModel()
     @State var isNavigationAllowed = false
+    @State var selectedLesson: Lessons?
+    @State var selectedOffset: Int = 0
     var body: some View {
-        ZStack {
-//            Color.customBackgroundColor
-//                .ignoresSafeArea()
+        NavigationView {
             VStack {
                 Rectangle()
                     .frame(height: 0.5)
@@ -26,7 +26,9 @@ struct LessonsListView: View {
                         LessonCellView(lesson: lesson)
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                isNavigationAllowed = true
+                                self.selectedLesson = lesson
+                                self.selectedOffset = offset
+                                self.isNavigationAllowed = true
                             }
                     }
                     .listRowSeparator(.hidden)
@@ -40,7 +42,7 @@ struct LessonsListView: View {
                 .listStyle(PlainListStyle())
                 .background(Color.customBackgroundColor)
                 
-                NavigationLink(destination: LessonDetailControllerView(), isActive: $isNavigationAllowed) {
+                NavigationLink(destination: LessonDetailControllerView(lesson: selectedLesson,selectedOffset: selectedOffset), isActive: $isNavigationAllowed) {
                     EmptyView()
                 }
             }

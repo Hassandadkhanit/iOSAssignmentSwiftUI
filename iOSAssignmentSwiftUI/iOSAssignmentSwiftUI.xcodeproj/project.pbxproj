@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12053E1B29DB50220078DB56 /* NavigationUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E1A29DB50220078DB56 /* NavigationUtilities.swift */; };
 		121930B929DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121930B829DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift */; };
 		121930BD29DAEA8000E4721C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121930BC29DAEA8000E4721C /* Assets.xcassets */; };
 		121930C029DAEA8000E4721C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121930BF29DAEA8000E4721C /* Preview Assets.xcassets */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		02625FF3A3B89B46919BEE60 /* Pods-iOSAssignmentSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSAssignmentSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-iOSAssignmentSwiftUITests/Pods-iOSAssignmentSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
 		049BC83F41A2D673FA5313E2 /* Pods-iOSAssignmentSwiftUI-iOSAssignmentSwiftUIUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSAssignmentSwiftUI-iOSAssignmentSwiftUIUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOSAssignmentSwiftUI-iOSAssignmentSwiftUIUITests/Pods-iOSAssignmentSwiftUI-iOSAssignmentSwiftUIUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		12053E1A29DB50220078DB56 /* NavigationUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUtilities.swift; sourceTree = "<group>"; };
 		121930B529DAEA8000E4721C /* iOSAssignmentSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSAssignmentSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		121930B829DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAssignmentSwiftUIApp.swift; sourceTree = "<group>"; };
 		121930BC29DAEA8000E4721C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -120,6 +122,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12053E1929DB500B0078DB56 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				12053E1A29DB50220078DB56 /* NavigationUtilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		121930AC29DAEA8000E4721C = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +159,7 @@
 				1219310D29DAED4300E4721C /* Globals */,
 				121930EB29DAED3100E4721C /* SharedManager */,
 				1219310F29DAED4300E4721C /* Extensions */,
+				12053E1929DB500B0078DB56 /* Utilities */,
 				121930E829DAED3100E4721C /* ServiceManager */,
 				1219310B29DAED4200E4721C /* Models */,
 				121930EF29DAED3100E4721C /* Scenes */,
@@ -584,6 +595,7 @@
 				1219310829DAED3100E4721C /* LessonDetailControllerView.swift in Sources */,
 				1219310429DAED3100E4721C /* LessonsListViewModel.swift in Sources */,
 				1219311129DAED4300E4721C /* LessonsModel.swift in Sources */,
+				12053E1B29DB50220078DB56 /* NavigationUtilities.swift in Sources */,
 				1219310529DAED3100E4721C /* LessonsListRepository.swift in Sources */,
 				1219310729DAED3100E4721C /* LessonsListView.swift in Sources */,
 				1219310029DAED3100E4721C /* APIClientHandler.swift in Sources */,

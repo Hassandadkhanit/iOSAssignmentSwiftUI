@@ -14,9 +14,9 @@ struct iOSAssignmentSwiftUIApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NavigationView {
+//            NavigationView {
                 LessonsListView()
-            }
+//            }
         }
     }
 }

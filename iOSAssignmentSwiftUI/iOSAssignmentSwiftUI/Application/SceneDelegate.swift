@@ -20,8 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        NetworkMonitor.shared.startMonitoring()
-        self.navigateToLandingScreen(window: window)
+//        self.navigateToLandingScreen(window: window)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
