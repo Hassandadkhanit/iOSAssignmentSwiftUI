@@ -9,6 +9,7 @@ import UIKit
 import SwiftUI
 import AVFoundation
 import AVKit
+import Combine
 
 class LessonDetailViewController: UIViewController {
 
@@ -16,6 +17,7 @@ class LessonDetailViewController: UIViewController {
     var videoView = UIView()
     var contentView = UIView()
     var scrollView = UIView()
+    var progressView = UIView()
     var downloadButton =  UIButton(type: .custom)
     var backButton =  UIButton(type: .custom)
     var previousButton =  UIButton(type: .custom)
@@ -25,14 +27,19 @@ class LessonDetailViewController: UIViewController {
     var selectedOffset: Int?
     var titleLabel = UILabel()
     var descriptionLabel = UILabel()
+    var progressLabel = UILabel()
     
     var player = AVPlayer()
     var playerLayer = AVPlayerLayer()
     let playerController           = AVPlayerViewController()
+    var subscription = Set<AnyCancellable>()
     
     var videoViewHeightConstraints = NSLayoutConstraint()
     var navigationHeightConstraint = NSLayoutConstraint()
     var scrollViewHeightConstraint = NSLayoutConstraint()
+    var progressViewHeightConstraint = NSLayoutConstraint()
+    
+    var viewModel = LessonDetailViewModel()
 
 
     
@@ -54,6 +61,7 @@ class LessonDetailViewController: UIViewController {
             self.setValues()
             self.setButtons()
         }
+        self.bindViewModel()
         
         
         // Do any additional setup after loading the view.
@@ -77,6 +85,38 @@ class LessonDetailViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
     }
+    // MARK: - BindViewModel
+    func bindViewModel() {
+        viewModel.$progress
+            .receive(on: RunLoop.main)
+            .sink { progress in
+                if progress > 0.0 {
+                    self.progressViewHeightConstraint.constant = 60
+                    self.progressLabel.text = String(format: "Downloaded: %.2f", progress * 100) + "%"
+                }
+            }
+            .store(in: &subscription)
+        viewModel.$downloadResult
+            .receive(on: RunLoop.main)
+            .sink { result in
+                self.progressViewHeightConstraint.constant = 0
+
+                switch result {
+                    
+                case .failure(let error):
+                    self.presentAlertWithTitleAndMessage(title: "", message: error.localizedDescription, options: "OK", completion: { buttons in
+                    })
+                    break
+                case .success(let downloadResult):
+                    break
+                case.none:
+                    print("none")
+                    break
+                }
+            }
+            .store(in: &subscription)
+
+    }
     //MARK: - Setup
     func setupViews() {
         self.view.backgroundColor = .customBackgroundColor
@@ -84,6 +124,7 @@ class LessonDetailViewController: UIViewController {
         self.setupNavigationView()
         self.setupPlayerView()
         self.setupScrollView()
+        self.setupProgressView()
         self.setupPlayer()
 
         
@@ -209,7 +250,7 @@ class LessonDetailViewController: UIViewController {
         ])
         
         titleLabel = UILabel.init()
-        titleLabel.textColor = .white
+        titleLabel.textColor = .customTextColor
         titleLabel.numberOfLines = 0
         titleLabel.font = UIFont.systemFont(ofSize: 30, weight: .bold)
 
@@ -278,6 +319,39 @@ class LessonDetailViewController: UIViewController {
         ])
         
     }
+    func setupProgressView() {
+        progressView = UIView(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.width, height: 60))
+        progressView.backgroundColor = .customBackgroundColor
+        self.view.addSubview(progressView)
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            progressView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0),
+            progressView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            progressView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0),
+            
+
+        ])
+        
+        progressViewHeightConstraint = progressView.heightAnchor.constraint(equalToConstant: 0)
+        progressViewHeightConstraint.isActive = true
+        
+        
+        progressLabel = UILabel.init()
+        progressLabel.textColor = .customTextColor
+        progressLabel.numberOfLines = 0
+        
+        self.progressView.addSubview(progressLabel)
+        progressLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            progressLabel.topAnchor.constraint(equalTo: progressView.topAnchor, constant: 8),
+            progressLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 8),
+            progressLabel.leadingAnchor.constraint(equalTo: progressView.leadingAnchor, constant: 16),
+            progressLabel.trailingAnchor.constraint(equalTo: progressView.trailingAnchor, constant: -16)
+
+        ])
+    }
     
     
     //MARK: - Set Values
@@ -291,7 +365,11 @@ class LessonDetailViewController: UIViewController {
         self.nextButton.isHidden = (self.selectedOffset ?? -1) == ((DataManager.shared.lessons.lessons?.count ?? 0)  - 1) ? true : false
     }
     func setupPlayer() {
-        let videoUrl = URL.init(string: lesson?.video_url ?? "")
+        var videoUrl = URL(string: lesson?.video_url ?? "")
+        if !NetworkMonitor.shared.isReachable {
+            let documentFile = Utilities.documentsUrl.appendingPathComponent("\(lesson?.id ?? 0)" + "." + FileType.mp4.rawValue)
+            videoUrl = URL(fileURLWithPath: documentFile.path)
+        }
         player = AVPlayer.init(url: videoUrl!)
         playerController.view.frame = self.videoView.bounds
         playerController.player = player
@@ -316,9 +394,6 @@ class LessonDetailViewController: UIViewController {
             self.contentView.isHidden = false
   
         }
-        
-        
-        
     }
     
     //MARK: - IB Action
@@ -326,7 +401,13 @@ class LessonDetailViewController: UIViewController {
         NavigationUtilities.popToRootView()
     }
     @objc func downloadTapped() {
-        
+        if !viewModel.isDownloadInProgress {
+            self.viewModel.downloadVideoFrom(lesson: lesson)
+
+        } else {
+            self.presentAlertWithTitleAndMessage(title: "", message: "Download Already in progress", options: "Ok") { button in
+            }
+        }
     }
     @objc func playTapped() {
         player.play()

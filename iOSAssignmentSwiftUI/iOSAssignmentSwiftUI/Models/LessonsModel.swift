@@ -30,6 +30,7 @@ struct Lessons : Codable {
     let description : String?
     let thumbnail : String?
     let video_url : String?
+    var saved_video_url : String?
 
     enum CodingKeys: String, CodingKey {
 
@@ -38,14 +39,16 @@ struct Lessons : Codable {
         case description = "description"
         case thumbnail = "thumbnail"
         case video_url = "video_url"
+        case saved_video_url = "saved_video_url"
     }
 
-    init(id: Int,name: String,description: String,thumbnail: String,video_url: String ) {
+    init(id: Int,name: String,description: String,thumbnail: String,video_url: String,saved_video_url : String ) {
         self.id = id
         self.name = name
         self.description = description
         self.thumbnail = thumbnail
         self.video_url = video_url
+        self.saved_video_url = saved_video_url
     }
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -54,6 +57,7 @@ struct Lessons : Codable {
         description = try values.decodeIfPresent(String.self, forKey: .description)
         thumbnail = try values.decodeIfPresent(String.self, forKey: .thumbnail)
         video_url = try values.decodeIfPresent(String.self, forKey: .video_url)
+        saved_video_url = try values.decodeIfPresent(String.self, forKey: .saved_video_url)
     }
 
 }

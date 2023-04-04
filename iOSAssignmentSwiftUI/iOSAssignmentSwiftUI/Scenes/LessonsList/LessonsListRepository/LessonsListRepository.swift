@@ -57,7 +57,8 @@ class LessonsListRepository: LessonsListRepositoryProtocol {
                                  name: CdLesson.name ?? "",
                                  description: CdLesson.descriptions ?? "",
                                  thumbnail: CdLesson.thumbnail ?? "",
-                                 video_url: CdLesson.video_url ?? "")
+                                 video_url: CdLesson.video_url ?? "",
+                                 saved_video_url: CdLesson.saved_video_url ?? "")
                 }
                 
                 promise(.success(LessonsModel.init(lessons: lessons)))
@@ -71,7 +72,7 @@ class LessonsListRepository: LessonsListRepositoryProtocol {
     func saveResponse(lessons: LessonsModel) {
         for lessonObj in lessons.lessons ?? [] {
             if let result  = self.getLessonBy(id: lessonObj.id ?? 0) {
-               _ = self.updateResponse(lesson: lessonObj)
+//               _ = self.updateResponse(lesson: lessonObj)
             } else {
                 self.createResponse(lesson: lessonObj)
             }
@@ -87,7 +88,8 @@ class LessonsListRepository: LessonsListRepositoryProtocol {
                        name: result.name ?? "",
                        description: result.descriptions ?? "",
                        thumbnail: result.thumbnail ?? "",
-                       video_url: result.video_url ?? "")
+                       video_url: result.video_url ?? "",
+                       saved_video_url: result.saved_video_url ?? "")
          
     }
     
@@ -113,6 +115,7 @@ class LessonsListRepository: LessonsListRepositoryProtocol {
         result.descriptions = lesson.description ?? ""
         result.thumbnail = lesson.thumbnail ?? ""
         result.video_url = lesson.video_url ?? ""
+        result.saved_video_url = lesson.saved_video_url ?? ""
         
         CoreDataManager.shared.saveContext()
         return true

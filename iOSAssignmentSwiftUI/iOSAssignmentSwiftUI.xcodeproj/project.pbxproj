@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		12053E1B29DB50220078DB56 /* NavigationUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E1A29DB50220078DB56 /* NavigationUtilities.swift */; };
+		12053E2829DBC4560078DB56 /* LessonDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E2729DBC4560078DB56 /* LessonDetailViewModel.swift */; };
+		12053E2A29DBC4EF0078DB56 /* LessonDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E2929DBC4EF0078DB56 /* LessonDetailRepository.swift */; };
+		12053E2C29DC17480078DB56 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E2B29DC17480078DB56 /* Utilities.swift */; };
+		12053E2E29DC43150078DB56 /* UIControllerExtesnion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E2D29DC43150078DB56 /* UIControllerExtesnion.swift */; };
 		121930B929DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121930B829DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift */; };
 		121930BD29DAEA8000E4721C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121930BC29DAEA8000E4721C /* Assets.xcassets */; };
 		121930C029DAEA8000E4721C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121930BF29DAEA8000E4721C /* Preview Assets.xcassets */; };
@@ -58,6 +62,10 @@
 		02625FF3A3B89B46919BEE60 /* Pods-iOSAssignmentSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSAssignmentSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-iOSAssignmentSwiftUITests/Pods-iOSAssignmentSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
 		049BC83F41A2D673FA5313E2 /* Pods-iOSAssignmentSwiftUI-iOSAssignmentSwiftUIUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSAssignmentSwiftUI-iOSAssignmentSwiftUIUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOSAssignmentSwiftUI-iOSAssignmentSwiftUIUITests/Pods-iOSAssignmentSwiftUI-iOSAssignmentSwiftUIUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		12053E1A29DB50220078DB56 /* NavigationUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationUtilities.swift; sourceTree = "<group>"; };
+		12053E2729DBC4560078DB56 /* LessonDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailViewModel.swift; sourceTree = "<group>"; };
+		12053E2929DBC4EF0078DB56 /* LessonDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailRepository.swift; sourceTree = "<group>"; };
+		12053E2B29DC17480078DB56 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		12053E2D29DC43150078DB56 /* UIControllerExtesnion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControllerExtesnion.swift; sourceTree = "<group>"; };
 		121930B529DAEA8000E4721C /* iOSAssignmentSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSAssignmentSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		121930B829DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAssignmentSwiftUIApp.swift; sourceTree = "<group>"; };
 		121930BC29DAEA8000E4721C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,8 +134,25 @@
 			isa = PBXGroup;
 			children = (
 				12053E1A29DB50220078DB56 /* NavigationUtilities.swift */,
+				12053E2B29DC17480078DB56 /* Utilities.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		12053E2529DBC4290078DB56 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				12053E2729DBC4560078DB56 /* LessonDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		12053E2629DBC4300078DB56 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				12053E2929DBC4EF0078DB56 /* LessonDetailRepository.swift */,
+			);
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		121930AC29DAEA8000E4721C = {
@@ -280,6 +305,8 @@
 			isa = PBXGroup;
 			children = (
 				121930FA29DAED3100E4721C /* Representable */,
+				12053E2629DBC4300078DB56 /* Repository */,
+				12053E2529DBC4290078DB56 /* ViewModel */,
 				121930FC29DAED3100E4721C /* Views */,
 			);
 			path = LessonDetail;
@@ -322,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				1219311029DAED4300E4721C /* ColorExtension.swift */,
+				12053E2D29DC43150078DB56 /* UIControllerExtesnion.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -589,6 +617,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				121930C529DAEA8000E4721C /* iOSAssignmentSwiftUI.xcdatamodeld in Sources */,
+				12053E2A29DBC4EF0078DB56 /* LessonDetailRepository.swift in Sources */,
+				12053E2C29DC17480078DB56 /* Utilities.swift in Sources */,
+				12053E2829DBC4560078DB56 /* LessonDetailViewModel.swift in Sources */,
 				1219311229DAED4300E4721C /* Constants.swift in Sources */,
 				1219310229DAED3100E4721C /* DataManager.swift in Sources */,
 				1219311329DAED4300E4721C /* ColorExtension.swift in Sources */,
@@ -605,6 +636,7 @@
 				121930FF29DAED3100E4721C /* RouteUrls.swift in Sources */,
 				1219310129DAED3100E4721C /* CoreDataManager.swift in Sources */,
 				1219310329DAED3100E4721C /* NetworkMonitor.swift in Sources */,
+				12053E2E29DC43150078DB56 /* UIControllerExtesnion.swift in Sources */,
 				1219311629DAF26300E4721C /* AppDelegate.swift in Sources */,
 				121930B929DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift in Sources */,
 			);

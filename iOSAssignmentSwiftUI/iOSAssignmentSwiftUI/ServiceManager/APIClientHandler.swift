@@ -36,13 +36,20 @@ enum NetworkError: Error {
     case timeOut
 }
 
-class APIClientHandler {
+class APIClientHandler: NSObject {
     static var shared = APIClientHandler()
-    private let session: URLSession
+    private lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.waitsForConnectivity = true
+        return URLSession(configuration: configuration,
+                          delegate: self, delegateQueue: nil)
+    }()
     private var cancellable = Set<AnyCancellable>()
     
-    init(session: URLSession = URLSession(configuration: URLSessionConfiguration.default)) {
-        self.session = session
+    @Published var progressResultPublisher: Result<Float?,Error>?
+    @Published var downloadedResultPublisher: Result<URL?,Error>?
+    
+    override init() {
     }
     
     private var getHeaders : [String:String] {
@@ -150,6 +157,13 @@ class APIClientHandler {
             .eraseToAnyPublisher()
     }
     
+    
+    func sendRequestDownload(url: URL) {
+            let task =   self.session.downloadTask(with: url)
+            task.resume()
+        
+    }
+
     //MARK: - Request
     private func makeRequest(urlString : String,parameters : [String: Any?],method : HTTPMethods) -> URLRequest? {
         var url : URL?
@@ -268,4 +282,22 @@ extension Publisher {
     static func fail(_ error: Failure) -> AnyPublisher<Output, Failure> {
         return Fail(error: error).eraseToAnyPublisher()
     }
+}
+extension APIClientHandler: URLSessionDelegate,URLSessionTaskDelegate, URLSessionDownloadDelegate {
+
+    // MARK: protocol stub for tracking download progress
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+            
+        let percentage = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+                print("percentage : ", percentage)
+        // update the percentage label
+        progressResultPublisher = .success(percentage)
+        DispatchQueue.main.async {
+            print("\(percentage * 100)%")
+        }
+    }
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        downloadedResultPublisher = .success(location)
+    }
+    
 }

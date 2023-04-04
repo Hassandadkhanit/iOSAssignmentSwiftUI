@@ -54,8 +54,8 @@ class LessonsListViewModel: ObservableObject {
                 case .finished:
                     print("Lesson fetch finished")
                 }
-            }, receiveValue: { lessonResult in
-                self.lessons = lessonResult
+            }, receiveValue: {[weak self] lessonResult in
+                self?.lessons = lessonResult
                 DataManager.shared.lessons.lessons = lessonResult?.lessons ?? []
 
             })
