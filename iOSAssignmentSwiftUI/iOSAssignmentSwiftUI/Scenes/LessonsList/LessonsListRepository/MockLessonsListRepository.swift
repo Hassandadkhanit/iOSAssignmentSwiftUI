@@ -1,29 +1,23 @@
 //
-//  LessonsListRepository.swift
-//  iOS Assignment
+//  MockLessonsListRepository.swift
+//  iOSAssignmentSwiftUI
 //
-//  Created by Hassan dad khan on 31/03/2023.
+//  Created by Hassan dad khan on 04/04/2023.
 //
 
 import Foundation
-import Combine
 import CoreData
 
-protocol LessonsListRepositoryProtocol {
-    func getLessonListFromAPI() -> Future<LessonsModel?,Error>
-    func getLessonListFromDatabase() -> Future<LessonsModel?,Error>
-    func getLessonBy(id: Int) -> Lessons?
-    func updateResponse(lesson: Lessons) -> Bool
-    func createResponse(lesson: Lessons)
-}
+import Combine
 
-class LessonsListRepository: LessonsListRepositoryProtocol {
-    
+
+class MockLessonsListRepository: LessonsListRepositoryProtocol {
+
     
     var subscription = Set<AnyCancellable>()
-    
+
     //MARK: - API Calling
-    func getLessonListFromAPI() -> Future<LessonsModel?,Error> {
+    func getLessonListFromAPI() -> Future<LessonsModel?, Error> {
         return Future<LessonsModel?,Error> { promise in
             APIClientHandler.shared.sendRequest(urlString: RouteUrls.getRouteUrlWith(route: RouteUrls.lessons), parameters: [:], method: .get)
                 .sink { completion in
@@ -37,18 +31,15 @@ class LessonsListRepository: LessonsListRepositoryProtocol {
                     do {
                        let lessonObj = try JSONDecoder().decode(LessonsModel.self, from: data)
                         promise(.success(lessonObj))
-                        self.saveResponse(lessons: lessonObj)
                     } catch (let error) {
                         promise(.failure(error))
                     }
                 }.store(in: &self.subscription)
-
         }
     }
     
-    // MARK: - CoreData Methods
-    
-    func getLessonListFromDatabase() -> Future<LessonsModel?,Error> {
+    //MARK: Database methods
+    func getLessonListFromDatabase() -> Future<LessonsModel?, Error> {
         return Future<LessonsModel?,Error> { promise in
             do {
                guard let result = try CoreDataManager.shared.context.fetch(CDLessons.fetchRequest()) as? [CDLessons] else {
@@ -71,18 +62,7 @@ class LessonsListRepository: LessonsListRepositoryProtocol {
         }
     }
     
-    func saveResponse(lessons: LessonsModel) {
-        for lessonObj in lessons.lessons ?? [] {
-            if let result  = self.getLessonBy(id: lessonObj.id ?? 0) {
-//               _ = self.updateResponse(lesson: lessonObj)
-            } else {
-                self.createResponse(lesson: lessonObj)
-            }
-        }
-        
-    }
     func getLessonBy(id: Int) -> Lessons? {
-        
         guard let result = getCDLesson(byIdentifier: id) else {
             return nil
         }
@@ -92,38 +72,15 @@ class LessonsListRepository: LessonsListRepositoryProtocol {
                        thumbnail: result.thumbnail ?? "",
                        video_url: result.video_url ?? "",
                        saved_video_url: result.saved_video_url ?? "")
-         
     }
     
-    
+    func updateResponse(lesson: Lessons) -> Bool {
+        return false
+    }
     
     func createResponse(lesson: Lessons) {
-        let cdLesson = CDLessons(context: CoreDataManager.shared.context)
-        cdLesson.id = Int32(lesson.id ?? 0)
-        cdLesson.name = lesson.name ?? ""
-        cdLesson.thumbnail = lesson.thumbnail ?? ""
-        cdLesson.descriptions = lesson.description ?? ""
-        cdLesson.video_url = lesson.video_url ?? ""
-        
-        CoreDataManager.shared.saveContext()
-        
+        //
     }
-    func updateResponse(lesson: Lessons) -> Bool {
-        guard let result = getCDLesson(byIdentifier: lesson.id ?? 0) else {
-            return false
-        }
-        result.id = Int32(lesson.id ?? 0)
-        result.name = lesson.name ?? ""
-        result.descriptions = lesson.description ?? ""
-        result.thumbnail = lesson.thumbnail ?? ""
-        result.video_url = lesson.video_url ?? ""
-        result.saved_video_url = lesson.saved_video_url ?? ""
-        
-        CoreDataManager.shared.saveContext()
-        return true
-    }
-    
-    
     //MARK: - Private Core data methods
     private func getCDLesson(byIdentifier: Int) -> CDLessons? {
         

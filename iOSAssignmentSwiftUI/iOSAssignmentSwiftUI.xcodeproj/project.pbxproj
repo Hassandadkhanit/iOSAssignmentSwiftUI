@@ -12,6 +12,10 @@
 		12053E2A29DBC4EF0078DB56 /* LessonDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E2929DBC4EF0078DB56 /* LessonDetailRepository.swift */; };
 		12053E2C29DC17480078DB56 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E2B29DC17480078DB56 /* Utilities.swift */; };
 		12053E2E29DC43150078DB56 /* UIControllerExtesnion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E2D29DC43150078DB56 /* UIControllerExtesnion.swift */; };
+		12053E3029DC496E0078DB56 /* LessonListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E2F29DC496E0078DB56 /* LessonListTests.swift */; };
+		12053E3529DC91B10078DB56 /* MockLessonsListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E3129DC49CC0078DB56 /* MockLessonsListRepository.swift */; };
+		12053E3A29DC99910078DB56 /* LessonDetailTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E3929DC99910078DB56 /* LessonDetailTests.swift */; };
+		12053E3C29DC9AA10078DB56 /* MockLessonDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12053E3B29DC9AA10078DB56 /* MockLessonDetailRepository.swift */; };
 		121930B929DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121930B829DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift */; };
 		121930BD29DAEA8000E4721C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121930BC29DAEA8000E4721C /* Assets.xcassets */; };
 		121930C029DAEA8000E4721C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121930BF29DAEA8000E4721C /* Preview Assets.xcassets */; };
@@ -66,6 +70,10 @@
 		12053E2929DBC4EF0078DB56 /* LessonDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailRepository.swift; sourceTree = "<group>"; };
 		12053E2B29DC17480078DB56 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		12053E2D29DC43150078DB56 /* UIControllerExtesnion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControllerExtesnion.swift; sourceTree = "<group>"; };
+		12053E2F29DC496E0078DB56 /* LessonListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonListTests.swift; sourceTree = "<group>"; };
+		12053E3129DC49CC0078DB56 /* MockLessonsListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLessonsListRepository.swift; sourceTree = "<group>"; };
+		12053E3929DC99910078DB56 /* LessonDetailTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailTests.swift; sourceTree = "<group>"; };
+		12053E3B29DC9AA10078DB56 /* MockLessonDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLessonDetailRepository.swift; sourceTree = "<group>"; };
 		121930B529DAEA8000E4721C /* iOSAssignmentSwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSAssignmentSwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		121930B829DAEA8000E4721C /* iOSAssignmentSwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSAssignmentSwiftUIApp.swift; sourceTree = "<group>"; };
 		121930BC29DAEA8000E4721C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -151,8 +159,25 @@
 			isa = PBXGroup;
 			children = (
 				12053E2929DBC4EF0078DB56 /* LessonDetailRepository.swift */,
+				12053E3B29DC9AA10078DB56 /* MockLessonDetailRepository.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		12053E3329DC908F0078DB56 /* LessonListTests */ = {
+			isa = PBXGroup;
+			children = (
+				12053E2F29DC496E0078DB56 /* LessonListTests.swift */,
+			);
+			path = LessonListTests;
+			sourceTree = "<group>";
+		};
+		12053E3829DC99790078DB56 /* LessonDetailTests */ = {
+			isa = PBXGroup;
+			children = (
+				12053E3929DC99910078DB56 /* LessonDetailTests.swift */,
+			);
+			path = LessonDetailTests;
 			sourceTree = "<group>";
 		};
 		121930AC29DAEA8000E4721C = {
@@ -206,6 +231,8 @@
 		121930CD29DAEA8000E4721C /* iOSAssignmentSwiftUITests */ = {
 			isa = PBXGroup;
 			children = (
+				12053E3829DC99790078DB56 /* LessonDetailTests */,
+				12053E3329DC908F0078DB56 /* LessonListTests */,
 				121930CE29DAEA8000E4721C /* iOSAssignmentSwiftUITests.swift */,
 			);
 			path = iOSAssignmentSwiftUITests;
@@ -280,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				121930F429DAED3100E4721C /* LessonsListRepository.swift */,
+				12053E3129DC49CC0078DB56 /* MockLessonsListRepository.swift */,
 			);
 			path = LessonsListRepository;
 			sourceTree = "<group>";
@@ -622,7 +650,9 @@
 				12053E2829DBC4560078DB56 /* LessonDetailViewModel.swift in Sources */,
 				1219311229DAED4300E4721C /* Constants.swift in Sources */,
 				1219310229DAED3100E4721C /* DataManager.swift in Sources */,
+				12053E3C29DC9AA10078DB56 /* MockLessonDetailRepository.swift in Sources */,
 				1219311329DAED4300E4721C /* ColorExtension.swift in Sources */,
+				12053E3529DC91B10078DB56 /* MockLessonsListRepository.swift in Sources */,
 				1219310829DAED3100E4721C /* LessonDetailControllerView.swift in Sources */,
 				1219310429DAED3100E4721C /* LessonsListViewModel.swift in Sources */,
 				1219311129DAED4300E4721C /* LessonsModel.swift in Sources */,
@@ -646,7 +676,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12053E3A29DC99910078DB56 /* LessonDetailTests.swift in Sources */,
 				121930CF29DAEA8000E4721C /* iOSAssignmentSwiftUITests.swift in Sources */,
+				12053E3029DC496E0078DB56 /* LessonListTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

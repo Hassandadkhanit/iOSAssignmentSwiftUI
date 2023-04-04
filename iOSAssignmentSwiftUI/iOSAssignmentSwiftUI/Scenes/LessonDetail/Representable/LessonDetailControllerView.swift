@@ -14,18 +14,15 @@ struct LessonDetailControllerView: UIViewControllerRepresentable {
     var lesson: Lessons?
     var selectedOffset: Int?
     func makeUIViewController(context: Context) -> LessonDetailViewController {
-        let controller = LessonDetailViewController.init()
-        controller.lesson = lesson
-        controller.selectedOffset = selectedOffset ?? -1
+        let viewModel = LessonDetailViewModel()
+        viewModel.lesson = lesson
+        viewModel.selectedOffset = selectedOffset ?? -1
+        let controller = LessonDetailViewController.init(viewModel: viewModel)
         return controller
     }
     
     func updateUIViewController(_ uiViewController: LessonDetailViewController, context: Context) {
         
     }
-    
-    
-    
-    
-    
+
 }

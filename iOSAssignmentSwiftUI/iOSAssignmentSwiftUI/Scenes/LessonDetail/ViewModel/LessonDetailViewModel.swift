@@ -16,6 +16,7 @@ class LessonDetailViewModel {
     @Published var downloadResult: Result<Bool,Error>?
     
     var lesson: Lessons?
+    var selectedOffset: Int?
 
     init(repository: LessonDetailRepositoryProtocol = LessonDetailRepository()) {
         self.repository = repository
@@ -43,8 +44,8 @@ class LessonDetailViewModel {
         .store(in: &subscription)
         
     }
-    func getSavedVideoURL(lesson: Lessons?) -> Lessons? {
-        if let result =  repository?.getLessonBy(id: lesson?.id ?? 0) {
+    func getLessonBy(id: Int) -> Lessons? {
+        if let result =  repository?.getLessonBy(id: id) {
             return result
         }
         return nil

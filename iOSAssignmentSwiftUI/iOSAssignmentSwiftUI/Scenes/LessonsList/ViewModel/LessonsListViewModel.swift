@@ -12,6 +12,7 @@ class LessonsListViewModel: ObservableObject {
     
     var repository: LessonsListRepositoryProtocol?
     @Published var lessons: LessonsModel?
+    
     private var subscription = Set<AnyCancellable>()
     
     init(repository: LessonsListRepositoryProtocol = LessonsListRepository()) {
@@ -52,7 +53,7 @@ class LessonsListViewModel: ObservableObject {
                 case .failure(let error):
                     print(error.localizedDescription)
                 case .finished:
-                    print("Lesson fetch finished")
+                    print("Lesson fetch from database finished")
                 }
             }, receiveValue: {[weak self] lessonResult in
                 self?.lessons = lessonResult
@@ -62,4 +63,8 @@ class LessonsListViewModel: ObservableObject {
             .store(in: &subscription)
         
     }
+    func getLessonFromId(id: Int) -> Lessons? {
+        repository?.getLessonBy(id: id)
+    }
+    
 }

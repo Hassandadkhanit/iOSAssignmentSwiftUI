@@ -22,9 +22,7 @@ class LessonDetailViewController: UIViewController {
     var backButton =  UIButton(type: .custom)
     var previousButton =  UIButton(type: .custom)
     var nextButton =  UIButton(type: .custom)
-    var lesson: Lessons?
-    
-    var selectedOffset: Int?
+
     var titleLabel = UILabel()
     var descriptionLabel = UILabel()
     var progressLabel = UILabel()
@@ -44,8 +42,9 @@ class LessonDetailViewController: UIViewController {
 
     
     //MARK: - Init
-    init() {
+    init(viewModel: LessonDetailViewModel = LessonDetailViewModel()) {
         super.init(nibName: String(describing: LessonDetailViewController.self), bundle: nil)
+        self.viewModel = viewModel
     }
     
     required init?(coder: NSCoder) {
@@ -356,18 +355,18 @@ class LessonDetailViewController: UIViewController {
     
     //MARK: - Set Values
     func setValues() {
-        titleLabel.text = lesson?.name ?? ""
-        descriptionLabel.text = lesson?.description ?? ""
+        titleLabel.text = viewModel.lesson?.name ?? ""
+        descriptionLabel.text = viewModel.lesson?.description ?? ""
         
     }
     func setButtons() {
-        self.previousButton.isHidden = (self.selectedOffset ?? -1) > 0 ? false : true
-        self.nextButton.isHidden = (self.selectedOffset ?? -1) == ((DataManager.shared.lessons.lessons?.count ?? 0)  - 1) ? true : false
+        self.previousButton.isHidden = (viewModel.selectedOffset ?? -1) > 0 ? false : true
+        self.nextButton.isHidden = (viewModel.selectedOffset ?? -1) == ((DataManager.shared.lessons.lessons?.count ?? 0)  - 1) ? true : false
     }
     func setupPlayer() {
-        var videoUrl = URL(string: lesson?.video_url ?? "")
+        var videoUrl = URL(string: viewModel.lesson?.video_url ?? "")
         if !NetworkMonitor.shared.isReachable {
-            let documentFile = Utilities.documentsUrl.appendingPathComponent("\(lesson?.id ?? 0)" + "." + FileType.mp4.rawValue)
+            let documentFile = Utilities.documentsUrl.appendingPathComponent("\(viewModel.lesson?.id ?? 0)" + "." + FileType.mp4.rawValue)
             videoUrl = URL(fileURLWithPath: documentFile.path)
         }
         player = AVPlayer.init(url: videoUrl!)
@@ -402,7 +401,7 @@ class LessonDetailViewController: UIViewController {
     }
     @objc func downloadTapped() {
         if !viewModel.isDownloadInProgress {
-            self.viewModel.downloadVideoFrom(lesson: lesson)
+            self.viewModel.downloadVideoFrom(lesson: viewModel.lesson)
 
         } else {
             self.presentAlertWithTitleAndMessage(title: "", message: "Download Already in progress", options: "Ok") { button in
@@ -414,10 +413,10 @@ class LessonDetailViewController: UIViewController {
     }
     
     @objc func nextTapped() {
-        let nextIndex  = (self.selectedOffset ?? 0) + 1
+        let nextIndex  = (viewModel.selectedOffset ?? 0) + 1
         if nextIndex < DataManager.shared.lessons.lessons?.count ?? 0 {
-            self.selectedOffset = nextIndex
-            self.lesson = DataManager.shared.lessons.lessons?[nextIndex]
+            viewModel.selectedOffset = nextIndex
+            viewModel.lesson = DataManager.shared.lessons.lessons?[nextIndex]
             self.setupPlayer()
             self.setValues()
             
@@ -427,10 +426,10 @@ class LessonDetailViewController: UIViewController {
         
     }
     @objc func previousTapped() {
-        let previousIndex  = (self.selectedOffset ?? 0) - 1
+        let previousIndex  = (viewModel.selectedOffset ?? 0) - 1
         if previousIndex >= 0  {
-            self.selectedOffset = previousIndex
-            self.lesson = DataManager.shared.lessons.lessons?[previousIndex]
+            viewModel.selectedOffset = previousIndex
+            viewModel.lesson = DataManager.shared.lessons.lessons?[previousIndex]
             self.setupPlayer()
             self.setValues()
             
