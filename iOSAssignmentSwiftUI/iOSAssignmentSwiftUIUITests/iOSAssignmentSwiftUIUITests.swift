@@ -39,10 +39,6 @@ final class iOSAssignmentSwiftUIUITests: XCTestCase {
         let backButton = XCUIApplication().buttons[" Lessons"]
         XCTAssertTrue(backButton.exists)
         backButton.tap()
-
-        
-        
-        
         
     }
 
@@ -52,7 +48,6 @@ final class iOSAssignmentSwiftUIUITests: XCTestCase {
             measure(metrics: [XCTApplicationLaunchMetric()]) {
                 XCUIApplication().launch()
             }
-            XCUIApplication().collectionViews/*@START_MENU_TOKEN@*/.staticTexts["The Key To Success In iPhone Photography"]/*[[".cells.staticTexts[\"The Key To Success In iPhone Photography\"]",".staticTexts[\"The Key To Success In iPhone Photography\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
 
         }
     }
