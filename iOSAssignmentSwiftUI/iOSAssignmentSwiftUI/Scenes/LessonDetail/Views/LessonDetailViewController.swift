@@ -79,6 +79,10 @@ class LessonDetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        player.seek(to: .zero)
+        playerController.player?.seek(to: .zero)
+        playerController.player?.pause()
+        player.pause()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -364,6 +368,16 @@ class LessonDetailViewController: UIViewController {
         self.nextButton.isHidden = (viewModel.selectedOffset ?? -1) == ((DataManager.shared.lessons.lessons?.count ?? 0)  - 1) ? true : false
     }
     func setupPlayer() {
+        
+        player.seek(to: .zero)
+        player.pause()
+
+        if playerController.player != nil {
+            playerController.player?.seek(to: .zero)
+            playerController.player?.pause()
+        }
+        
+        
         var videoUrl = URL(string: viewModel.lesson?.video_url ?? "")
         if !NetworkMonitor.shared.isReachable {
             let documentFile = Utilities.documentsUrl.appendingPathComponent("\(viewModel.lesson?.id ?? 0)" + "." + FileType.mp4.rawValue)
@@ -373,6 +387,7 @@ class LessonDetailViewController: UIViewController {
         playerController.view.frame = self.videoView.bounds
         playerController.player = player
         self.videoView.addSubview(playerController.view)
+        player.play()
         
     }
     
