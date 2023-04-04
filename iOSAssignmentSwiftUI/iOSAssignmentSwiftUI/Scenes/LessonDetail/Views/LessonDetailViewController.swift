@@ -244,24 +244,6 @@ class LessonDetailViewController: UIViewController {
         videoViewHeightConstraints =   videoView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.3)
         
         videoViewHeightConstraints.isActive = true
-        /*
-        let playPauseButton =  UIButton(type: .custom)
-        playPauseButton.setImage(UIImage(systemName: "play"), for:.normal)
-        playPauseButton.addTarget(self, action: #selector(playTapped), for: .touchUpInside)
-        
-        videoView.addSubview(playPauseButton)
-        playPauseButton.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate(
-            [
-                playPauseButton.centerXAnchor.constraint(equalTo: videoView.centerXAnchor),
-                playPauseButton.centerYAnchor.constraint(equalTo: videoView.centerYAnchor),
-            ]
-        )
-        
-         */
-        
-       
         
     }
     func setupScrollView() {
@@ -342,7 +324,7 @@ class LessonDetailViewController: UIViewController {
         ])
         
         progressViewHeightConstraint = progressView.heightAnchor.constraint(equalToConstant: 0)
-        progressViewHeightConstraint.isActive = true        
+        progressViewHeightConstraint.isActive = true
         self.progressView.addSubview(progressLabel)
         
         NSLayoutConstraint.activate([

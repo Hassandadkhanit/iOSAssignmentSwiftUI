@@ -66,7 +66,7 @@ class LessonDetailRepository: LessonDetailRepositoryProtocol {
         if let urlPath = Utilities.save(url: url, fileName: String(lesson?.id ?? 0), fileType: .mp4) {
             var updatedLesson = lesson
             updatedLesson?.saved_video_url = urlPath
-            updateResponse(lesson: updatedLesson)
+            _ = updateResponse(lesson: updatedLesson)
         }
     }
     
