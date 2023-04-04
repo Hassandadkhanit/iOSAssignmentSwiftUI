@@ -18,14 +18,72 @@ class LessonDetailViewController: UIViewController {
     var contentView = UIView()
     var scrollView = UIView()
     var progressView = UIView()
-    var downloadButton =  UIButton(type: .custom)
-    var backButton =  UIButton(type: .custom)
-    var previousButton =  UIButton(type: .custom)
-    var nextButton =  UIButton(type: .custom)
+    var downloadButton : UIButton = {
+        let button =  UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "icloud.and.arrow.down"), for:.normal)
+        button.setTitle(" Download", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(downloadTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
 
-    var titleLabel = UILabel()
-    var descriptionLabel = UILabel()
-    var progressLabel = UILabel()
+    }()
+    var backButton: UIButton = {
+       let button =  UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "chevron.left"), for:.normal)
+        button.setTitle(" Lessons", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    var previousButton: UIButton = {
+       let button =  UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "chevron.left"), for:.normal)
+        button.setTitle(" Previous Lesson ", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.isHidden = true
+        button.addTarget(self, action: #selector(previousTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    var nextButton: UIButton = {
+       let button =  UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "chevron.right"), for:.normal)
+        button.setTitle("Next Lesson ", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.semanticContentAttribute = .forceRightToLeft
+        button.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    var titleLabel: UILabel = {
+       let label = UILabel.init()
+        label.textColor = .customTextColor
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.setContentHuggingPriority(.defaultLow, for: .vertical)
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    var descriptionLabel: UILabel = {
+        let label = UILabel.init()
+        label.textColor = .customTextColor
+        label.numberOfLines = 0
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    var progressLabel: UILabel = {
+       let  label = UILabel.init()
+        label.textColor = .customTextColor
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     var player = AVPlayer()
     var playerLayer = AVPlayerLayer()
@@ -136,26 +194,8 @@ class LessonDetailViewController: UIViewController {
          navigationView = UIView(frame: CGRect.init(x: 0, y: 0, width: self.view.bounds.width, height: 50))
         navigationView.backgroundColor = .customBackgroundColor
 
-
-        let downloadButton =  UIButton(type: .custom)
-        downloadButton.setImage(UIImage(systemName: "icloud.and.arrow.down"), for:.normal)
-        downloadButton.setTitle(" Download", for: .normal)
-        downloadButton.setTitleColor(.systemBlue, for: .normal)
-        downloadButton.addTarget(self, action: #selector(downloadTapped), for: .touchUpInside)
-        
-         backButton =  UIButton(type: .custom)
-        backButton.setImage(UIImage(systemName: "chevron.left"), for:.normal)
-        backButton.setTitle(" Lessons", for: .normal)
-        backButton.setTitleColor(.systemBlue, for: .normal)
-        backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-        
-
         navigationView.addSubview(backButton)
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-
-        
         navigationView.addSubview(downloadButton)
-        downloadButton.translatesAutoresizingMaskIntoConstraints = false
 
         self.view.addSubview(navigationView)
         navigationView.translatesAutoresizingMaskIntoConstraints = false
@@ -251,46 +291,11 @@ class LessonDetailViewController: UIViewController {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0)
 
         ])
-        
-        titleLabel = UILabel.init()
-        titleLabel.textColor = .customTextColor
-        titleLabel.numberOfLines = 0
-        titleLabel.font = UIFont.systemFont(ofSize: 30, weight: .bold)
 
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         self.contentView.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        descriptionLabel = UILabel.init()
-        descriptionLabel.textColor = .customTextColor
-        descriptionLabel.numberOfLines = 0
-        
-        descriptionLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        descriptionLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        
         self.contentView.addSubview(descriptionLabel)
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        nextButton =  UIButton(type: .custom)
-        nextButton.setImage(UIImage(systemName: "chevron.right"), for:.normal)
-        nextButton.setTitle("Next Lesson ", for: .normal)
-        nextButton.setTitleColor(.systemBlue, for: .normal)
-        nextButton.semanticContentAttribute = .forceRightToLeft
-        nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
-        
         self.contentView.addSubview(nextButton)
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        previousButton =  UIButton(type: .custom)
-        previousButton.setImage(UIImage(systemName: "chevron.left"), for:.normal)
-        previousButton.setTitle(" Previous Lesson ", for: .normal)
-        previousButton.setTitleColor(.systemBlue, for: .normal)
-        previousButton.isHidden = true
-        previousButton.addTarget(self, action: #selector(previousTapped), for: .touchUpInside)
-        
         self.contentView.addSubview(previousButton)
-        previousButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -337,15 +342,8 @@ class LessonDetailViewController: UIViewController {
         ])
         
         progressViewHeightConstraint = progressView.heightAnchor.constraint(equalToConstant: 0)
-        progressViewHeightConstraint.isActive = true
-        
-        
-        progressLabel = UILabel.init()
-        progressLabel.textColor = .customTextColor
-        progressLabel.numberOfLines = 0
-        
+        progressViewHeightConstraint.isActive = true        
         self.progressView.addSubview(progressLabel)
-        progressLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             progressLabel.topAnchor.constraint(equalTo: progressView.topAnchor, constant: 8),
