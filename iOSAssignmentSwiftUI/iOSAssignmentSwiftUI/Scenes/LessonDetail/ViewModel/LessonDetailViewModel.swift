@@ -44,11 +44,16 @@ class LessonDetailViewModel {
         .store(in: &subscription)
         
     }
+    
+    func cancelDownload() {
+        self.repository?.cancelDownload()
+    }
     func getLessonBy(id: Int) -> Lessons? {
         if let result =  repository?.getLessonBy(id: id) {
             return result
         }
         return nil
     }
+    
     
 }

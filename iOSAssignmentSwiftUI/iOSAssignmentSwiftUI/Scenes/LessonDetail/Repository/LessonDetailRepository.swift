@@ -12,6 +12,7 @@ import CoreData
 protocol LessonDetailRepositoryProtocol {
     func downloadVideo(lesson: Lessons?,completionProgress: @escaping (Float) -> Void) -> Future<Bool,Error>
     func getLessonBy(id: Int) -> Lessons?
+    func cancelDownload() 
 }
 
 class LessonDetailRepository: LessonDetailRepositoryProtocol {
@@ -70,6 +71,9 @@ class LessonDetailRepository: LessonDetailRepositoryProtocol {
         }
     }
     
+    func cancelDownload() {
+        APIClientHandler.shared.cancelDownload()
+    }
     //MARK: - Core Data methods
     
     func getLessonBy(id: Int) -> Lessons? {

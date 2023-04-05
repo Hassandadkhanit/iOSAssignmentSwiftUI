@@ -396,11 +396,14 @@ class LessonDetailViewController: UIViewController {
     }
     @objc func downloadTapped() {
         if !viewModel.isDownloadInProgress {
+            self.downloadButton.setTitle(" Cancel Download", for: .normal)
             self.viewModel.downloadVideoFrom(lesson: viewModel.lesson)
 
         } else {
-            self.presentAlertWithTitleAndMessage(title: "", message: "Download Already in progress", options: "Ok") { button in
-            }
+            self.downloadButton.setTitle(" Download", for: .normal)
+            self.viewModel.isDownloadInProgress = false
+            self.progressViewHeightConstraint.constant = 0
+            self.viewModel.cancelDownload()
         }
     }
     @objc func playTapped() {

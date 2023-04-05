@@ -45,6 +45,7 @@ class APIClientHandler: NSObject {
                           delegate: self, delegateQueue: nil)
     }()
     private var cancellable = Set<AnyCancellable>()
+    var task = URLSessionDownloadTask()
     
     @Published var progressResultPublisher: Result<Float?,Error>?
     @Published var downloadedResultPublisher: Result<URL?,Error>?
@@ -86,6 +87,7 @@ class APIClientHandler: NSObject {
                 }
             }
         }
+        
         task.resume()
         
     }
@@ -159,9 +161,12 @@ class APIClientHandler: NSObject {
     
     
     func sendRequestDownload(url: URL) {
-            let task =   self.session.downloadTask(with: url)
+            task =   self.session.downloadTask(with: url)
             task.resume()
         
+    }
+    func cancelDownload() {
+        task.cancel()
     }
 
     //MARK: - Request

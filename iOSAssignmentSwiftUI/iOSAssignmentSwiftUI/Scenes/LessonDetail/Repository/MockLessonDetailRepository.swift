@@ -55,6 +55,9 @@ class MockLessonDetailRepository: LessonDetailRepositoryProtocol {
 
         }
     }
+    func cancelDownload() {
+        APIClientHandler.shared.cancelDownload()
+    }
     
     func saveToFileManager(url : URL,lesson: Lessons?) {
         if let urlPath = Utilities.save(url: url, fileName: String(lesson?.id ?? 0), fileType: .mp4) {
