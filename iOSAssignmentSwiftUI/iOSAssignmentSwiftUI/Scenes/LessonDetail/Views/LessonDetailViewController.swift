@@ -129,10 +129,7 @@ class LessonDetailViewController: UIViewController {
         self.setupPlayer()
 
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
-    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -140,6 +137,7 @@ class LessonDetailViewController: UIViewController {
         player.seek(to: .zero)
         playerController.player?.seek(to: .zero)
         playerController.player?.pause()
+        self.viewModel.cancelDownload()
         player.pause()
     }
     override func viewDidLayoutSubviews() {
@@ -391,7 +389,16 @@ class LessonDetailViewController: UIViewController {
     
     //MARK: - IB Action
     @objc func backTapped() {
-        NavigationUtilities.popToRootView()
+        if viewModel.isDownloadInProgress {
+            self.presentAlertWithTitleAndMessage(title: "Alert", message: "Are you sure you want to go back and stop downloading?", options: "Cancel","Yes") { result in
+                if result == 1 {
+                    NavigationUtilities.popToRootView()
+                }
+            }
+        } else {
+            NavigationUtilities.popToRootView()
+        }
+        
     }
     @objc func downloadTapped() {
         if !viewModel.isDownloadInProgress {
