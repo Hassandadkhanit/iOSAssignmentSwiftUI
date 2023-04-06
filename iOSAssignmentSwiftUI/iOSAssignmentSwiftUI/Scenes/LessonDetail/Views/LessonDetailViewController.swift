@@ -126,7 +126,7 @@ class LessonDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-
+        self.setupPlayer()
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -186,7 +186,6 @@ class LessonDetailViewController: UIViewController {
         self.setupPlayerView()
         self.setupScrollView()
         self.setupProgressView()
-        self.setupPlayer()
 
         
     }
